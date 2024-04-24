@@ -1,0 +1,46 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
+      <h3>Formulaire du  Produit</h3>
+      <form class="row g-3 mt-2"  [formGroup]="ProduitUpdate" (submit)="updateProduit(ProduitUpdate.value)">
+        <input type="hidden" formControlName="id_Produit">
+        <div class="col-md-6">
+          <label for="validationDefault01" class="form-label">Type</label>
+          <input type="text" class="form-control" formControlName="type" id="validationDefault01"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(ProduitUpdate.get('type')?.hasError('required') ) && ProduitUpdate.get('type')?.touched" >
+             Type is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault02" class="form-label">Reference</label>
+          <input type="text" class="form-control"  formControlName="reference" id="validationDefault02"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(ProduitUpdate.get('reference')?.hasError('required') ) && ProduitUpdate.get('reference')?.touched" >
+          reference is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault03" class="form-label">Description</label>
+          <input type="text" class="form-control"  formControlName="description" id="validationDefault03"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(ProduitUpdate.get('description')?.hasError('required') ) && ProduitUpdate.get('description')?.touched" >
+          description is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault04" class="form-label">Prix</label>
+          <input type="text" class="form-control"  formControlName="prix" id="validationDefault03"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(ProduitUpdate.get('prix')?.hasError('required') ) && ProduitUpdate.get('prix')?.touched" >
+             prix is required
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" [disabled]="!ProduitUpdate.valid" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

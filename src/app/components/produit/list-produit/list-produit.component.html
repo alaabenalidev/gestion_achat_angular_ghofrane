@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <h3>LISTE DES PRODUITS</h3>
+
+  <div class="d-flex justify-content-end mb-3">
+    <!-- Bouton "Ajouter un fournisseur" -->
+    <a class="btn btn-success me-3" routerLink="/admin/client/create">Ajouter un fournisseur</a>
+    
+    <!-- Bouton "Ajouter un produit" -->
+    <a class="btn btn-success" routerLink="/admin/produit/create">Ajouter un produit</a>
+  </div>
+  <!-- Tableau des produits -->
+  <table class="table table-bordered text-center">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Référence</th>
+        <th scope="col">Description</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td>{{ item.type }}</td>
+        <td>{{ item.reference }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.prix }}</td>
+        <td>
+          <button type="button" class="btn btn-danger me-2" (click)="removeProduit(item.id_Produit)">Supprimer</button>
+          <a type="button" class="btn btn-info" [routerLink]="['/admin/produit/edit', item.id_Produit]">Modifier</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

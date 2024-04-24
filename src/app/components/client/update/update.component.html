@@ -1,0 +1,54 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
+      <h3>modifier les informations d'un dournisseur</h3>
+      <form class="row g-3 mt-2"  [formGroup]="clientUpdate" (submit)="saveClient(clientUpdate.value)">
+        <input type="hidden" formControlName="id">
+        <div class="col-md-6">
+          <label for="validationDefault01" class="form-label">Nom</label>
+          <input type="text" class="form-control" formControlName="nom" id="validationDefault01"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(clientUpdate.get('nom')?.hasError('required') ) && clientUpdate.get('nom')?.touched" >
+             Nom is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault02" class="form-label">Prenom</label>
+          <input type="text" class="form-control"  formControlName="prenom" id="validationDefault02"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(clientUpdate.get('prenom')?.hasError('required') ) && clientUpdate.get('prenom')?.touched" >
+             Prenom is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault03" class="form-label">Adresse</label>
+          <input type="text" class="form-control"  formControlName="adresse" id="validationDefault03"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(clientUpdate.get('adresse')?.hasError('required') ) && clientUpdate.get('adresse')?.touched" >
+             Adresse is required
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault04" class="form-label">Ville</label>
+          <input type="text" class="form-control"  formControlName="ville" id="validationDefault03"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(clientUpdate.get('ville')?.hasError('required') ) && clientUpdate.get('ville')?.touched" >
+             Ville is required
+          </div>
+        </div>
+        <div class="col-md-5">
+          <label for="validationDefault05" class="form-label">Num téléphone</label>
+          <input type="text" class="form-control"  formControlName="num_tel" id="validationDefault05" required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(clientUpdate.get('num_tel')?.hasError('required') ) && clientUpdate.get('num_tel')?.touched" >
+            Num tel is required
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" [disabled]="!clientUpdate.valid" type="submit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

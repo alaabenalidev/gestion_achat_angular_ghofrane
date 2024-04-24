@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
+      <h3>Formulaire Produit</h3>
+      <div class="alert alert-danger" role="alert" *ngIf="messageErreur">
+        Erreur lors de l'ajout du produit.
+      </div>
+      <div class="alert alert-success" role="alert" *ngIf="messageSuccess">
+        Produit ajouté avec succès.
+      </div>
+      <form class="row g-3 mt-2" [formGroup]="ProduitRegister" (submit)="saveAllProduit(ProduitRegister.value)">
+        <div class="col-md-6">
+          <label for="type" class="form-label">Type</label>
+          <input type="text" class="form-control" formControlName="type" id="type" required>
+          <div class="alert alert-danger mt-2" role="alert"
+               *ngIf="ProduitRegister.get('type')?.hasError('required') && ProduitRegister.get('type')?.touched">
+            Le type est requis.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="reference" class="form-label">Référence</label>
+          <input type="text" class="form-control" formControlName="reference" id="reference" required pattern="[a-zA-Z\s]*">
+          <div class="alert alert-danger mt-2" role="alert"
+               *ngIf="ProduitRegister.get('reference')?.hasError('required') && ProduitRegister.get('reference')?.touched">
+            La référence est requise.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" formControlName="description" id="description" required pattern="[a-zA-Z\s]*">
+          <div class="alert alert-danger mt-2" role="alert"
+               *ngIf="ProduitRegister.get('description')?.hasError('required') && ProduitRegister.get('description')?.touched">
+            La description est requise.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="prix" class="form-label">Prix</label>
+          <input type="number" class="form-control" formControlName="prix" id="prix" required min="0.01">
+          <div class="alert alert-danger mt-2" role="alert"
+               *ngIf="ProduitRegister.get('prix')?.hasError('required') && ProduitRegister.get('prix')?.touched">
+            Le prix est requis.
+          </div>
+          <div class="alert alert-danger mt-2" role="alert"
+               *ngIf="ProduitRegister.get('prix')?.hasError('min') && ProduitRegister.get('prix')?.touched">
+            Le prix doit être strictement supérieur à zéro.
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" [disabled]="!ProduitRegister.valid" type="submit">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
