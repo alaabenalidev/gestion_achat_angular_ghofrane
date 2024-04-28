@@ -4,7 +4,7 @@
   <div class="d-flex justify-content-end mb-3">
     <!-- Bouton "Ajouter un fournisseur" -->
     <a class="btn btn-success me-3" routerLink="/admin/client/create">Ajouter un fournisseur</a>
-    
+
     <!-- Bouton "Ajouter un produit" -->
     <a class="btn btn-success" routerLink="/admin/produit/create">Ajouter un produit</a>
   </div>
@@ -16,6 +16,7 @@
         <th scope="col">Référence</th>
         <th scope="col">Description</th>
         <th scope="col">Prix</th>
+        <th scope="col">Catégorie</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -25,6 +26,7 @@
         <td>{{ item.reference }}</td>
         <td>{{ item.description }}</td>
         <td>{{ item.prix }}</td>
+        <td>{{ item.categorie.name }}</td>
         <td>
           <button type="button" class="btn btn-danger me-2" (click)="removeProduit(item.id_Produit)">Supprimer</button>
           <a type="button" class="btn btn-info" [routerLink]="['/admin/produit/edit', item.id_Produit]">Modifier</a>
