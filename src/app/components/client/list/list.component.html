@@ -1,16 +1,16 @@
 <div class="container mt-5">
   <h3>Liste des fournisseurs</h3>
-  
+
   <!-- Message d'alerte en cas de succès -->
   <div class="alert alert-danger" role="alert" *ngIf="messageSuccess">
     Suppression du fournisseur effectuée avec succès.
   </div>
-  
+
   <!-- Boutons d'actions -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <!-- Titre optionnel pour le tableau -->
     <h5 class="m-0"></h5>
-    
+
     <!-- Bouton "Ajouter un fournisseur" -->
     <a class="btn btn-success" routerLink="/admin/client/create">Ajouter un fournisseur</a>
   </div>
@@ -24,6 +24,7 @@
         <th scope="col">Adresse</th>
         <th scope="col">Numéro de téléphone</th>
         <th scope="col">Ville</th>
+        <th scope="col">catégorie</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
@@ -34,6 +35,7 @@
         <td>{{ item.adresse }}</td>
         <td>{{ item.num_tel }}</td>
         <td>{{ item.ville }}</td>
+        <td>{{ item.categorie.name }}</td>
         <td>
           <!-- Bouton "Supprimer" -->
           <button type="button" class="btn btn-danger me-2" (click)="removeClient(item.id)">Supprimer</button>

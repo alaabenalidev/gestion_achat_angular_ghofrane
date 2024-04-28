@@ -5,6 +5,8 @@ import {ProduitService} from '../../../service/produit/produit.service';
 import {Categorie} from "../../../model/Categorie";
 import {CategorieService} from "../../../service/categorie/categorie.service";
 import {Router} from "@angular/router";
+import {Client} from "../../../model/Client";
+import {ClientService} from "../../../service/client/client.service";
 
 @Component({
   selector: 'app-create-produit',
@@ -16,9 +18,9 @@ export class CreateProduitComponent implements OnInit {
   messageSuccess = false;
   ProduitRegister!: FormGroup;
   categories: Categorie[] = []
-  categorieResgister!: FormGroup;
+  clients: Client[] = []
 
-  constructor(private produitService: ProduitService, private categorieService: CategorieService, private fb: FormBuilder,private route: Router) {
+  constructor(private produitService: ProduitService, private categorieService: CategorieService, private clientService: ClientService, private fb: FormBuilder,private route: Router) {
   }
 
   loadCategories() {
@@ -27,10 +29,21 @@ export class CreateProduitComponent implements OnInit {
     })
   }
 
+  loadClients() {
+    this.clientService.getAllClientByIdCategorie(this.categorie?.value).subscribe(data => {
+      this.clients = data
+    })
+  }
+
   ngOnInit(): void {
     this.validationForm();
-    this.validationCategForm();
-    this.loadCategories()
+    this.loadCategories();
+
+    this.ProduitRegister.get('categorie')?.valueChanges.subscribe(value => {
+      console.log('Value changed:', value);
+      this.loadClients()
+      // You can perform any action here based on the changed value
+    });
   }
 
   validationForm(): void {
@@ -39,25 +52,23 @@ export class CreateProduitComponent implements OnInit {
       reference: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
       description: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
       prix: ['', [Validators.required, Validators.min(0.01)]],
-      categorie: [null, [Validators.required]]
-    });
-  }
-
-  validationCategForm(): void {
-    this.categorieResgister = this.fb.group({
-      name: [],
+      categorie: [null, [Validators.required]],
+      client: [null, [Validators.required]]
     });
   }
 
   saveAllProduit(produit: Produit): void {
     if (this.ProduitRegister.valid) {
-      console.log(produit)
       this.categories.map(el => {
         if (this.categorie && el.id_Categorie == this.categorie.value) {
           produit.categorie = el
         }
       })
-      console.log(produit)
+      this.clients.map(el => {
+        if (this.client && el.id == this.client.value) {
+          produit.client = el
+        }
+      })
       this.produitService.saveProduit(produit).subscribe(
         (data) => {
           this.messageSuccess = true;
@@ -72,24 +83,6 @@ export class CreateProduitComponent implements OnInit {
         }
       );
     }
-  }
-
-  saveCateg(categorie: Categorie) {
-
-
-    this.categorieService.saveCategorie(categorie).subscribe(
-      (data) => {
-        if (window.confirm("create categorie success")) {
-          this.loadCategories()
-          this.categorieResgister.reset()
-          // this.messageSuccsess=true;
-        }
-
-      },
-      (error) => {
-        this.messageErreur = true;
-      }
-    )
   }
 
   // Accéder aux contrôles de formulaire pour la validation dans le template
@@ -111,5 +104,8 @@ export class CreateProduitComponent implements OnInit {
 
   get categorie() {
     return this.ProduitRegister.get('categorie');
+  }
+  get client() {
+    return this.ProduitRegister.get('client');
   }
 }

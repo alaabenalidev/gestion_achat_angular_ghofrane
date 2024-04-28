@@ -1,4 +1,3 @@
-
 <div class="container mt-5">
   <div class="row">
     <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
@@ -9,45 +8,69 @@
       <div class="alert alert-success" role="alert" *ngIf="messageSuccsess">
         add client success
       </div>
-      <form class="row g-3 mt-2"  [formGroup]="clientResgister" (submit)="saveAllClient(clientResgister.value)">
+      <form class="row g-3 mt-2" [formGroup]="clientResgister" (submit)="saveAllClient(clientResgister.value)">
         <div class="col-md-6">
           <label for="validationDefault01" class="form-label">Nom</label>
-          <input type="text" class="form-control" formControlName="nom" id="validationDefault01"  required>
+          <input type="text" class="form-control" formControlName="nom" id="validationDefault01" required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientResgister.get('nom')?.hasError('required') ) && clientResgister.get('nom')?.touched" >
-             Nom is required
+               *ngIf="(clientResgister.get('nom')?.hasError('required') ) && clientResgister.get('nom')?.touched">
+            Nom is required
           </div>
         </div>
         <div class="col-md-6">
           <label for="validationDefault02" class="form-label">Prenom</label>
-          <input type="text" class="form-control"  formControlName="prenom" id="validationDefault02"  required>
+          <input type="text" class="form-control" formControlName="prenom" id="validationDefault02" required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientResgister.get('prenom')?.hasError('required') ) && clientResgister.get('prenom')?.touched" >
-             Prenom is required
+               *ngIf="(clientResgister.get('prenom')?.hasError('required') ) && clientResgister.get('prenom')?.touched">
+            Prenom is required
           </div>
         </div>
         <div class="col-md-6">
           <label for="validationDefault03" class="form-label">Adresse</label>
-          <input type="text" class="form-control"  formControlName="adresse" id="validationDefault03"  required>
+          <input type="text" class="form-control" formControlName="adresse" id="validationDefault03" required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientResgister.get('adresse')?.hasError('required') ) && clientResgister.get('adresse')?.touched" >
-             Adresse is required
+               *ngIf="(clientResgister.get('adresse')?.hasError('required') ) && clientResgister.get('adresse')?.touched">
+            Adresse is required
           </div>
         </div>
         <div class="col-md-6">
           <label for="validationDefault04" class="form-label">Ville</label>
-          <input type="text" class="form-control"  formControlName="ville" id="validationDefault03"  required>
+          <input type="text" class="form-control" formControlName="ville" id="validationDefault03" required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientResgister.get('ville')?.hasError('required') ) && clientResgister.get('ville')?.touched" >
-             Ville is required
+               *ngIf="(clientResgister.get('ville')?.hasError('required') ) && clientResgister.get('ville')?.touched">
+            Ville is required
           </div>
         </div>
         <div class="col-md-5">
           <label for="validationDefault05" class="form-label">Num tel</label>
-          <input type="text" class="form-control"  formControlName="num_tel" id="validationDefault05" required>
+          <input type="text" class="form-control" formControlName="num_tel" id="validationDefault05" required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientResgister.get('num_tel')?.hasError('required') ) && clientResgister.get('num_tel')?.touched" >
+               *ngIf="(clientResgister.get('num_tel')?.hasError('required') ) && clientResgister.get('num_tel')?.touched">
             Num tel is required
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-6 from-group">
+              <label class="form-label">Categorie: </label>
+              <select class="form-select" formControlName="categorie">
+                <option value="-1" selected disabled>Select a category</option>
+                <option *ngFor="let category of categories" [value]="category.id_Categorie">{{ category.name }}</option>
+              </select>
+            </div>
+            <form class="col-md-6" [formGroup]="categorieResgister" (submit)="saveCateg(categorieResgister.value)">
+              <div class="col-md-12">
+                <label for="validationDefault01" class="form-label">Nom du nouvelle catégorie</label>
+                <input type="text" class="form-control" formControlName="name" id="name" required>
+                <div class="alert alert-danger mt-2" role="alert"
+                     *ngIf="(categorieResgister.get('name')?.hasError('required') ) && categorieResgister.get('name')?.touched">
+                  Nom is required
+                </div>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary" [disabled]="!categorieResgister.valid" type="submit">Save</button>
+              </div>
+            </form>
           </div>
         </div>
         <div class="col-12">

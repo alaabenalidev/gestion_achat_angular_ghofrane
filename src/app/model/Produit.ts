@@ -1,4 +1,5 @@
 import {Categorie} from "./Categorie";
+import {Client} from "./Client";
 
 export interface Produit {
   id_Produit: number,
@@ -7,4 +8,5 @@ export interface Produit {
   description: String,
   prix: String,
   categorie: Categorie
+  client: Client
 }

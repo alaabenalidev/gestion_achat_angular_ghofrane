@@ -47,24 +47,18 @@
         </div>
         <div class="col-md-6 from-group">
           <label for="description" class="form-label">Categorie: </label>
-          <select class="form-select" formControlName="categorie">
+          <select class="form-select" formControlName="categorie" (select)="loadClients()">
             <option value="-1" selected disabled>Select a category</option>
             <option *ngFor="let category of categories" [value]="category.id_Categorie">{{ category.name }}</option>
           </select>
         </div>
-        <form class="col-md-6" [formGroup]="categorieResgister" (submit)="saveCateg(categorieResgister.value)">
-          <div class="col-md-12">
-            <label for="validationDefault01" class="form-label">Nom du nouvelle catégorie</label>
-            <input type="text" class="form-control" formControlName="name" id="validationDefault01"  required>
-            <div class="alert alert-danger mt-2" role="alert"
-                 *ngIf="(categorieResgister.get('name')?.hasError('required') ) && categorieResgister.get('name')?.touched" >
-              Nom is required
-            </div>
-          </div>
-          <div class="col-12">
-            <button class="btn btn-primary" [disabled]="!categorieResgister.valid" type="submit">Save</button>
-          </div>
-        </form>
+        <div class="col-md-6 from-group" *ngIf="categorie?.value != null">
+          <label for="description" class="form-label">Fournisseur: </label>
+          <select class="form-select" formControlName="client">
+            <option value="-1" selected disabled>Select a fournisseur</option>
+            <option *ngFor="let category of clients" [value]="category.id">{{ category.prenom+" "+category.nom }}</option>
+          </select>
+        </div>
         <div class="col-12">
           <button class="btn btn-primary" [disabled]="!ProduitRegister.valid" type="submit">Enregistrer</button>
         </div>

@@ -46,6 +46,8 @@ export class UpdateProduitComponent implements OnInit {
       reference: ['', [Validators.required]],
       description: ['', [Validators.required]],
       prix: ['', [Validators.required]],
+      // categorie: ['', [Validators.required]],
+      // client: ['', [Validators.required]],
     });
   }
 

@@ -27,6 +27,7 @@
         <td>{{ item.description }}</td>
         <td>{{ item.prix }}</td>
         <td>{{ item.categorie.name }}</td>
+        <td>{{ item.client.prenom+" "+item.client.nom }}</td>
         <td>
           <button type="button" class="btn btn-danger me-2" (click)="removeProduit(item.id_Produit)">Supprimer</button>
           <a type="button" class="btn btn-info" [routerLink]="['/admin/produit/edit', item.id_Produit]">Modifier</a>
