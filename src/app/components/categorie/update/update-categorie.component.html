@@ -1,0 +1,22 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
+      <h3>modifier le nom du categorie</h3>
+      <form class="row g-3 mt-2" [formGroup]="categorieUpdate" (submit)="saveClient(categorieUpdate.value)">
+        <input type="hidden" formControlName="id">
+        <div class="col-md-6">
+          <label for="validationDefault01" class="form-label">Nom</label>
+          <input type="text" class="form-control" formControlName="name" id="validationDefault01"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(categorieUpdate.get('name')?.hasError('required') ) && categorieUpdate.get('name')?.touched" >
+             Nom is required
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" [disabled]="!categorieUpdate.valid" type="submit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

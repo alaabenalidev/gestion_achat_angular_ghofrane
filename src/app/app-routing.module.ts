@@ -9,6 +9,9 @@ import { AdminGuard } from './Guard/admin/admin.guard';
 import { ListProduitComponent } from './components/produit/list-produit/list-produit.component';
 import { CreateProduitComponent } from './components/produit/create-produit/create-produit.component';
 import { UpdateProduitComponent } from './components/produit/update-produit/update-produit.component';
+import {CreateCategorieComponent} from "./components/categorie/create/create_categorie.component";
+import {UpdateCategorieComponent} from "./components/categorie/update/update-categorie.component";
+import {ListCategorieComponent} from "./components/categorie/list/list-categorie.component";
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
@@ -24,6 +27,9 @@ const routes: Routes = [
       { path: 'produit/list', component: ListProduitComponent },
       { path: 'produit/create', component: CreateProduitComponent },
       { path: 'produit/edit/:id', component: UpdateProduitComponent },
+      { path: 'categorie/list', component: ListCategorieComponent },
+      { path: 'categorie/create', component: CreateCategorieComponent },
+      { path: 'categorie/edit/:id', component: UpdateCategorieComponent },
     ]
   },
 

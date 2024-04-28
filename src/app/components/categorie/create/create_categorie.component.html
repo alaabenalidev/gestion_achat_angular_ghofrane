@@ -1,0 +1,27 @@
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-7 m-auto shadow p-5 mb-5 bg-body rounded">
+      <h3>Formulaire d'ajout d'une catégorie</h3>
+      <div class="alert alert-danger" role="alert" *ngIf="messageErreur">
+        erreur
+      </div>
+      <div class="alert alert-success" role="alert" *ngIf="messageSuccsess">
+        Ajout catégorie success
+      </div>
+      <form class="row g-3 mt-2" [formGroup]="categorieResgister" (submit)="saveAllClient(categorieResgister.value)">
+        <div class="col-md-12">
+          <label for="validationDefault01" class="form-label">Nom</label>
+          <input type="text" class="form-control" formControlName="name" id="validationDefault01"  required>
+          <div class="alert alert-danger mt-2" role="alert"
+          *ngIf="(categorieResgister.get('name')?.hasError('required') ) && categorieResgister.get('name')?.touched" >
+             Nom is required
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" [disabled]="!categorieResgister.valid" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

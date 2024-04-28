@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <h3>Liste des Catégorie</h3>
+
+  <!-- Message d'alerte en cas de succès -->
+  <div class="alert alert-danger" role="alert" *ngIf="messageSuccess">
+    Suppression du catégorie effectuée avec succès.
+  </div>
+
+  <!-- Boutons d'actions -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <!-- Titre optionnel pour le tableau -->
+    <h5 class="m-0"></h5>
+
+    <!-- Bouton "Ajouter un fournisseur" -->
+    <a class="btn btn-success" routerLink="/admin/categorie/create">Ajouter un catégorie</a>
+  </div>
+
+  <!-- Tableau des fournisseurs -->
+  <table class="table table-bordered table-striped text-center">
+    <thead class="table-primary"> <!-- Utilisation de table-primary pour les en-têtes -->
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nom catégorie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td>{{ item.id_Categorie }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+          <!-- Bouton "Supprimer" -->
+          <button type="button" class="btn btn-danger me-2" (click)="removeClient(item.id_Categorie)">Supprimer</button>
+          <!-- Bouton "Modifier" -->
+          <a type="button" class="btn btn-info" [routerLink]="['/admin/categorie/edit', item.id_Categorie]">Modifier</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
