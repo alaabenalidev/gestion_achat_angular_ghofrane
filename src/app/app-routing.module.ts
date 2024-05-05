@@ -12,6 +12,7 @@ import { UpdateProduitComponent } from './components/produit/update-produit/upda
 import {CreateCategorieComponent} from "./components/categorie/create/create_categorie.component";
 import {UpdateCategorieComponent} from "./components/categorie/update/update-categorie.component";
 import {ListCategorieComponent} from "./components/categorie/list/list-categorie.component";
+import {PanierComponent} from "./components/produit/list-produit-panier/panier.component";
 
 const routes: Routes = [
   {path:"",component:HomeComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'client/list', component: ListComponent },
       { path: 'client/create', component: CreateComponent },
       { path: 'client/edit/:id', component: UpdateComponent },
+      { path: 'panier', component: PanierComponent },
       { path: 'produit/list', component: ListProduitComponent },
       { path: 'produit/create', component: CreateProduitComponent },
       { path: 'produit/edit/:id', component: UpdateProduitComponent },

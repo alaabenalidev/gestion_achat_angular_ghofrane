@@ -8,26 +8,18 @@ import {FournisseurProduit} from "../../model/FournisseurProduit";
 @Injectable({
   providedIn: 'root'
 })
-export class FournisseurProduitService {
+export class CommandeService {
 
-  apiUrl=environment.apiFournisseurProduit;
+  apiUrl=environment.apiCommande;
 
   constructor(private http:HttpClient) { }
 
-  getAllProduit():Observable<FournisseurProduit[]>{
+  getAllCommande():Observable<FournisseurProduit[]>{
     return this.http.get<FournisseurProduit[]>(`${this.apiUrl}/list`);
   }
 
-  getFournisseurProduitByProduitId(id:number):Observable<FournisseurProduit[]>{
-    return this.http.get<FournisseurProduit[]>(`${this.apiUrl}/${id}/produit`);
-  }
-
-  getFournisseurProduitById(id:number):Observable<FournisseurProduit>{
-    return this.http.get<FournisseurProduit>(`${this.apiUrl}/${id}`);
-  }
-
-  saveFournisseurProduit(items:FournisseurProduit[]):Observable<FournisseurProduit[]>{
-    return this.http.post<FournisseurProduit[]>(`${this.apiUrl}/create`,items);
+  saveCommand(items:FournisseurProduit[]):Observable<any>{
+    return this.http.post<any>(`${this.apiUrl}/create`,items);
   }
 
   updateProduit(produit:Produit):Observable<Produit>{

@@ -18,6 +18,7 @@ import {UpdateProduitComponent} from './components/produit/update-produit/update
 import {CreateCategorieComponent} from "./components/categorie/create/create_categorie.component";
 import {ListCategorieComponent} from "./components/categorie/list/list-categorie.component";
 import {UpdateCategorieComponent} from "./components/categorie/update/update-categorie.component";
+import {PanierComponent} from "./components/produit/list-produit-panier/panier.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {UpdateCategorieComponent} from "./components/categorie/update/update-cat
     UpdateProduitComponent,
     CreateCategorieComponent,
     ListCategorieComponent,
-    UpdateCategorieComponent
+    UpdateCategorieComponent,
+    PanierComponent
   ],
   imports: [
     BrowserModule,

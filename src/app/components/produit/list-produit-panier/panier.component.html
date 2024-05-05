@@ -1,0 +1,151 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-7">
+      <h3>LISTE DES PRODUITS</h3>
+      <table class="table table-bordered text-center">
+        <thead class="table-primary">
+        <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Référence</th>
+          <th scope="col">Description</th>
+          <th scope="col">Catégorie</th>
+          <th scope="col">Fournisseurs</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of data;let i=index">
+          <td>{{ item.type }}</td>
+          <td>{{ item.reference }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.categorie.name }}</td>
+          <td>
+            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    (click)="changeSelectedProductItem(i)">Ajouter
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-5">
+      <form [formGroup]="panierForm" (ngSubmit)="onSubmit()" class="card card-body bg-light">
+        <table id="cart" class="table table-hover table-condensed">
+          <thead>
+          <tr>
+            <th style="width:50%">Product</th>
+            <th style="width:10%">Price</th>
+            <th style="width:8%">Quantity</th>
+            <th style="width:22%" class="text-center">Subtotal</th>
+            <th style="width:10%"></th>
+          </tr>
+          </thead>
+          <tbody formArrayName="items">
+          <tr *ngFor="let item of panierForm.get('items')?.value; let i = index" [formGroupName]="i">
+            <td data-th="Product">
+              <div class="col-sm-10">
+                {{ getItemProduct(item)?.type }}
+              </div>
+            </td>
+            <td data-th="Price">{{ getItemFournisseur(item)?.prix }}</td>
+            <td data-th="qte">
+              <input type="number" class="form-control text-center" formControlName="qte" value="1">
+            </td>
+            <td data-th="Subtotal"
+                class="text-center">{{ (panierForm.get('items')?.value[i].qte || 1) * (getItemFournisseur(item)?.prix || 1) }}
+            </td>
+            <!--            <td data-th="Subtotal" class="text-center">{{ 0 }}</td>-->
+            <td class="actions" data-th="">
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(i)">x</button>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr class="visible-xs">
+<!--            <td class="text-center"><strong>Total $ 5.11</strong></td>-->
+          </tr>
+          <tr>
+            <td colspan="2" class="hidden-xs"></td>
+<!--            <td class="hidden-xs text-center"><strong>Total $ 5.11</strong></td>-->
+            <td><button type="submit" class="btn btn-success btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal1">Checkout <i class="fa fa-angle-right"></i></button></td>
+          </tr>
+          </tfoot>
+        </table>
+      </form>
+    </div>
+
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-dialog" id="exampleModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="produitForm" (ngSubmit)="onSubmitAddProductToCard()" class="card card-body bg-light">
+        <div class="modal-body overflow-scroll" style="max-height: 400px">
+          <div
+            class="form-row align-items-center">
+            <div class="col-12 mb-3">
+              <div class="col-md-12 from-group">
+                <label class="form-label">Fourniseur par prix: </label>
+                <select class="form-select" formControlName="clientProdutit">
+                  <option value="-1" selected disabled>Select a fournisseur</option>
+                  <option *ngFor="let item of fournisseurProduit,let i=index"
+                          [value]="i">{{ item.fournisseur.prenom + " " + item.fournisseur.nom + " | " + item.prix }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="panierForm.reset()">Close
+          </button>
+          <button type="submit" class="btn btn-success" [disabled]="produitForm.invalid" data-bs-dismiss="modal">
+            Affecter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-dialog" id="exampleModal1" tabindex="-1"
+     aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="panierForm" (ngSubmit)="onSubmit()" class="card card-body bg-light">
+        <div class="modal-body overflow-scroll" style="max-height: 400px">
+          <div
+            class="form-row align-items-center">
+            <div class="col-12 mb-3">
+              <div class="col-md-12 from-group">
+                <label class="form-label">Client: </label>
+                <select class="form-select" formControlName="client">
+                  <option value="-1" selected disabled>Select a fournisseur</option>
+                  <option *ngFor="let item of clients,let i=index"
+                          [value]="item.id">{{ item.prenom + " " + item.nom }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+          </button>
+          <button type="submit" class="btn btn-success" [disabled]="panierForm.invalid" data-bs-dismiss="modal">
+            Confirmer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
