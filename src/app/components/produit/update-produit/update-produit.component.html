@@ -29,14 +29,6 @@
           description is required
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="validationDefault04" class="form-label">Prix</label>
-          <input type="text" class="form-control"  formControlName="prix" id="validationDefault03"  required>
-          <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(ProduitUpdate.get('prix')?.hasError('required') ) && ProduitUpdate.get('prix')?.touched" >
-             prix is required
-          </div>
-        </div>
         <div class="col-12">
           <button class="btn btn-primary" [disabled]="!ProduitUpdate.valid" type="submit">Save</button>
         </div>

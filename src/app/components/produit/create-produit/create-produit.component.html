@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
           <label for="reference" class="form-label">Référence</label>
-          <input type="text" class="form-control" formControlName="reference" id="reference" required pattern="[a-zA-Z\s]*">
+          <input type="text" class="form-control" formControlName="reference" id="reference" required>
           <div class="alert alert-danger mt-2" role="alert"
                *ngIf="ProduitRegister.get('reference')?.hasError('required') && ProduitRegister.get('reference')?.touched">
             La référence est requise.
@@ -27,40 +27,40 @@
         </div>
         <div class="col-md-6">
           <label for="description" class="form-label">Description</label>
-          <input type="text" class="form-control" formControlName="description" id="description" required pattern="[a-zA-Z\s]*">
+          <input type="text" class="form-control" formControlName="description" id="description" required>
           <div class="alert alert-danger mt-2" role="alert"
                *ngIf="ProduitRegister.get('description')?.hasError('required') && ProduitRegister.get('description')?.touched">
             La description est requise.
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="prix" class="form-label">Prix</label>
-          <input type="number" class="form-control" formControlName="prix" id="prix" required min="0.01">
-          <div class="alert alert-danger mt-2" role="alert"
-               *ngIf="ProduitRegister.get('prix')?.hasError('required') && ProduitRegister.get('prix')?.touched">
-            Le prix est requis.
-          </div>
-          <div class="alert alert-danger mt-2" role="alert"
-               *ngIf="ProduitRegister.get('prix')?.hasError('min') && ProduitRegister.get('prix')?.touched">
-            Le prix doit être strictement supérieur à zéro.
-          </div>
-        </div>
+        <!--        <div class="col-md-6">-->
+        <!--          <label for="prix" class="form-label">Prix</label>-->
+        <!--          <input type="number" class="form-control" formControlName="prix" id="prix" required min="0.01">-->
+        <!--          <div class="alert alert-danger mt-2" role="alert"-->
+        <!--               *ngIf="ProduitRegister.get('prix')?.hasError('required') && ProduitRegister.get('prix')?.touched">-->
+        <!--            Le prix est requis.-->
+        <!--          </div>-->
+        <!--          <div class="alert alert-danger mt-2" role="alert"-->
+        <!--               *ngIf="ProduitRegister.get('prix')?.hasError('min') && ProduitRegister.get('prix')?.touched">-->
+        <!--            Le prix doit être strictement supérieur à zéro.-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="col-md-6 from-group">
           <label for="description" class="form-label">Categorie: </label>
-          <select class="form-select" formControlName="categorie" (select)="loadClients()">
+          <select class="form-select" formControlName="categorie" name="client" (select)="loadClients()">
             <option value="-1" selected disabled>Select a category</option>
             <option *ngFor="let category of categories" [value]="category.id_Categorie">{{ category.name }}</option>
           </select>
         </div>
-        <div class="col-md-6 from-group" *ngIf="categorie?.value != null">
-          <label for="description" class="form-label">Fournisseur: </label>
-          <select class="form-select" formControlName="client">
-            <option value="-1" selected disabled>Select a fournisseur</option>
-            <option *ngFor="let category of clients" [value]="category.id">{{ category.prenom+" "+category.nom }}</option>
-          </select>
-        </div>
+        <!--        <div class="col-md-6 from-group" *ngIf="categorie?.value != null">-->
+        <!--          <label for="description" class="form-label">Fournisseur: </label>-->
+        <!--          <select class="form-select" formControlName="client" name="client">-->
+        <!--            <option value="-1" selected disabled>Select a fournisseur</option>-->
+        <!--            <option *ngFor="let client of clients" [value]="client.id">{{ client.prenom+" "+client.nom }}</option>-->
+        <!--          </select>-->
+        <!--        </div>-->
         <div class="col-12">
-          <button class="btn btn-primary" [disabled]="!ProduitRegister.valid" type="submit">Enregistrer</button>
+          <button class="btn btn-primary" [disabled]="ProduitRegister.invalid" type="submit">Enregistrer</button>
         </div>
       </form>
     </div>

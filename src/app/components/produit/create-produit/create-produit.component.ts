@@ -20,7 +20,7 @@ export class CreateProduitComponent implements OnInit {
   categories: Categorie[] = []
   clients: Client[] = []
 
-  constructor(private produitService: ProduitService, private categorieService: CategorieService, private clientService: ClientService, private fb: FormBuilder,private route: Router) {
+  constructor(private produitService: ProduitService, private categorieService: CategorieService, private clientService: ClientService, private fb: FormBuilder, private route: Router) {
   }
 
   loadCategories() {
@@ -49,11 +49,9 @@ export class CreateProduitComponent implements OnInit {
   validationForm(): void {
     this.ProduitRegister = this.fb.group({
       type: ['', [Validators.required]],
-      reference: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      description: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
-      prix: ['', [Validators.required, Validators.min(0.01)]],
-      categorie: [null, [Validators.required]],
-      client: [null, [Validators.required]]
+      reference: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      categorie: [null, [Validators.required]]
     });
   }
 
@@ -64,11 +62,11 @@ export class CreateProduitComponent implements OnInit {
           produit.categorie = el
         }
       })
-      this.clients.map(el => {
-        if (this.client && el.id == this.client.value) {
-          produit.client = el
-        }
-      })
+      // this.clients.map(el => {
+      //   if (this.client && el.id == this.client.value) {
+      //     produit.client = el
+      //   }
+      // })
       this.produitService.saveProduit(produit).subscribe(
         (data) => {
           this.messageSuccess = true;
@@ -105,6 +103,7 @@ export class CreateProduitComponent implements OnInit {
   get categorie() {
     return this.ProduitRegister.get('categorie');
   }
+
   get client() {
     return this.ProduitRegister.get('client');
   }

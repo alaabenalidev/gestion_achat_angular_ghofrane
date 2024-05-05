@@ -11,28 +11,78 @@
   <!-- Tableau des produits -->
   <table class="table table-bordered text-center">
     <thead class="table-primary">
-      <tr>
-        <th scope="col">Type</th>
-        <th scope="col">Référence</th>
-        <th scope="col">Description</th>
-        <th scope="col">Prix</th>
-        <th scope="col">Catégorie</th>
-        <th scope="col">Action</th>
-      </tr>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Référence</th>
+      <th scope="col">Description</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">Fournisseurs</th>
+      <th scope="col">Action</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data">
-        <td>{{ item.type }}</td>
-        <td>{{ item.reference }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.prix }}</td>
-        <td>{{ item.categorie.name }}</td>
-        <td>{{ item.client.prenom+" "+item.client.nom }}</td>
-        <td>
-          <button type="button" class="btn btn-danger me-2" (click)="removeProduit(item.id_Produit)">Supprimer</button>
-          <a type="button" class="btn btn-info" [routerLink]="['/admin/produit/edit', item.id_Produit]">Modifier</a>
-        </td>
-      </tr>
+    <tr *ngFor="let item of data;let i=index">
+      <td>{{ item.type }}</td>
+      <td>{{ item.reference }}</td>
+      <td>{{ item.description }}</td>
+      <td>{{ item.categorie.name }}</td>
+      <td>
+        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                (click)="changeSelectedProductItem(i)">Gestion
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-danger me-2" (click)="removeProduit(item.id_Produit)">Supprimer</button>
+        <a type="button" class="btn btn-info" [routerLink]="['/admin/produit/edit', item.id_Produit]">Modifier</a>
+      </td>
+    </tr>
     </tbody>
   </table>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-dialog" id="exampleModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="clientsForm" (ngSubmit)="onSubmit()" class="card card-body bg-light">
+        <div class="modal-body overflow-scroll" style="max-height: 400px">
+
+          <div formArrayName="items" class="mb-2">
+            <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i"
+                 class="form-row align-items-center">
+              <div class="col-12 mb-3">
+                <label for="fournisseur-{{i}}">Client ID</label>
+                <div class="col-md-6 from-group">
+                  <label class="form-label">Fournisseur: </label>
+                  <select class="form-select" formControlName="fournisseur" id="fournisseur-{{i}}">
+                    <option value="-1" selected disabled>Select a fournisseur</option>
+                    <option *ngFor="let client of clients" [value]="client.id">{{ client.prenom + " " + client.nom }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-5 mb-3">
+                <label for="prix-{{i}}">Prix</label>
+                <input type="number" formControlName="prix" id="prix-{{i}}" placeholder="Prix" class="form-control"
+                       required min="0.01">
+              </div>
+              <div class="col-md-2 mb-3">
+                <button type="button" (click)="removeItem(i)" class="btn btn-danger">Remove</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" (click)="addItem()" class="btn btn-primary">Add Item</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="clientsForm.reset()">Close
+          </button>
+          <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Affecter</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
