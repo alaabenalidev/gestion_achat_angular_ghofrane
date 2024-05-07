@@ -78,7 +78,8 @@
           <button type="button" (click)="addItem()" class="btn btn-primary">Add Item</button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="clientsForm.reset()">Close
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  (click)="clientsForm.reset();items.clear()">Close
           </button>
           <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Affecter</button>
         </div>

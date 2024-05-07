@@ -16,6 +16,7 @@ import {CommandeService} from "../../../service/commande/commande.service";
 export class PanierComponent implements OnInit {
 
   data: Produit[] = [];
+  dataFiltered: Produit[] = [];
   listFournisseurProduct: FournisseurProduit[] = [];
 
   panierForm!: FormGroup;
@@ -26,7 +27,7 @@ export class PanierComponent implements OnInit {
   fournisseurProduit: FournisseurProduit[] = []
 
 
-  constructor(private commandeService:CommandeService,private produitService: ProduitService, private fb: FormBuilder, private clientService: ClientService, private fournisseurProduitService: FournisseurProduitService) {
+  constructor(private commandeService: CommandeService, private produitService: ProduitService, private fb: FormBuilder, private clientService: ClientService, private fournisseurProduitService: FournisseurProduitService) {
   }
 
   ngOnInit(): void {
@@ -58,7 +59,6 @@ export class PanierComponent implements OnInit {
 
   initForm() {
     this.panierForm = this.fb.group({
-      client: [null, [Validators.required]],
       items: this.fb.array([])
     })
 
@@ -86,6 +86,7 @@ export class PanierComponent implements OnInit {
     return this.produitService.getAllProduit().subscribe(
       (info) => {
         this.data = info;
+        this.dataFiltered = info
       },
       (error) => {
         console.log(error);
@@ -95,7 +96,7 @@ export class PanierComponent implements OnInit {
 
   onSubmit(): void {
     if (this.panierForm.valid) {
-      this.commandeService.saveCommand(this.panierForm.value).subscribe(data=>{
+      this.commandeService.saveCommand(this.panierForm.value).subscribe(data => {
         this.panierForm.reset()
         this.items.clear()
       })
@@ -135,5 +136,11 @@ export class PanierComponent implements OnInit {
       }
     })
     return value;
+  }
+
+  searchProduct(input: any) {
+    let word = input.target.value;
+
+    this.dataFiltered = this.data.filter(item => item.type.toLowerCase().includes(word.toLowerCase()) || item.description.toLowerCase().includes(word.toLowerCase()) || item.reference.toLowerCase().includes(word.toLowerCase()));
   }
 }

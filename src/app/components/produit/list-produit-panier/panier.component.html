@@ -2,6 +2,12 @@
   <div class="row">
     <div class="col-7">
       <h3>LISTE DES PRODUITS</h3>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Recherche :</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" (keyup)="searchProduct($event)">
+      </div>
       <table class="table table-bordered text-center">
         <thead class="table-primary">
         <tr>
@@ -13,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of data;let i=index">
+        <tr *ngFor="let item of dataFiltered;let i=index">
           <td>{{ item.type }}</td>
           <td>{{ item.reference }}</td>
           <td>{{ item.description }}</td>
@@ -118,25 +124,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel1">Confirmation de la commande</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form [formGroup]="panierForm" (ngSubmit)="onSubmit()" class="card card-body bg-light">
-        <div class="modal-body overflow-scroll" style="max-height: 400px">
-          <div
-            class="form-row align-items-center">
-            <div class="col-12 mb-3">
-              <div class="col-md-12 from-group">
-                <label class="form-label">Client: </label>
-                <select class="form-select" formControlName="client">
-                  <option value="-1" selected disabled>Select a fournisseur</option>
-                  <option *ngFor="let item of clients,let i=index"
-                          [value]="item.id">{{ item.prenom + " " + item.nom }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
+        <div class="modal-body " >
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
