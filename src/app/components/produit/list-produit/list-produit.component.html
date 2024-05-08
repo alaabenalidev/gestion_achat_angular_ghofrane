@@ -49,7 +49,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form [formGroup]="clientsForm" (ngSubmit)="onSubmit()" class="card card-body bg-light">
-        <div class="modal-body overflow-scroll" style="max-height: 400px">
+        <div class="modal-body overflow-scroll" style="max-height: 200px">
 
           <div formArrayName="items" class="mb-2">
             <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i"
