@@ -81,7 +81,7 @@
 
 
             </form>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+            <button type="button" [disabled]="items.length<1" class="btn btn-success" data-bs-toggle="modal"
                     data-bs-target="#exampleModal1">Confirmer</button>
         </div>
 
