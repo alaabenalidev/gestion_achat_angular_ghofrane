@@ -30,11 +30,11 @@
           </div>
         </div>
         <div class="col-md-6">
-          <label for="validationDefault04" class="form-label">Ville</label>
-          <input type="text" class="form-control"  formControlName="ville" id="validationDefault03"  required>
+          <label for="validationDefault04" class="form-label">Email</label>
+          <input type="text" class="form-control"  formControlName="email" id="validationDefault03"  required>
           <div class="alert alert-danger mt-2" role="alert"
-          *ngIf="(clientUpdate.get('ville')?.hasError('required') ) && clientUpdate.get('ville')?.touched" >
-             Ville is required
+          *ngIf="(clientUpdate.get('email')?.hasError('required') ) && clientUpdate.get('email')?.touched" >
+             Email is required
           </div>
         </div>
         <div class="col-md-5">

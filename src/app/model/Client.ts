@@ -6,6 +6,6 @@ export interface Client{
   prenom:String,
   adresse:String,
   num_tel:String,
-  ville:String,
+  email:String,
   categorie: Categorie
 }

@@ -34,11 +34,11 @@
           </div>
         </div>
         <div class="col-md-6">
-          <label for="validationDefault04" class="form-label">Ville</label>
-          <input type="text" class="form-control" formControlName="ville" id="validationDefault04" required>
+          <label for="validationDefault04" class="form-label">Email</label>
+          <input type="text" class="form-control" formControlName="email" id="validationDefault04" required>
           <div class="alert alert-danger mt-2" role="alert"
-               *ngIf="(clientResgister.get('ville')?.hasError('required') ) && clientResgister.get('ville')?.touched">
-            Ville is required
+               *ngIf="(clientResgister.get('email')?.hasError('required') ) && clientResgister.get('email')?.touched">
+              Email is required
           </div>
         </div>
         <div class="col-md-5">
