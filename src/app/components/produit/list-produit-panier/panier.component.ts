@@ -32,6 +32,8 @@ export class PanierComponent implements OnInit {
     produits: Produit[] = []
     selectedIdCategory: number = 0;
 
+    arrayLigne: { categories: Categorie[]; products: Produit[]; fournisseurs: FournisseurProduit[]; }[] = [];
+
 
     constructor(private commandeService: CommandeService, private categorieService: CategorieService, private produitService: ProduitService, private fb: FormBuilder, private clientService: ClientService, private fournisseurProduitService: FournisseurProduitService) {
     }
@@ -89,16 +91,23 @@ export class PanierComponent implements OnInit {
         })
     }
 
-    loadFounrnisseurProduitWithId() {
-        this.fournisseurProduitService.getFournisseurProduitByProduitId(this.selectedIndexProductItem).subscribe(data => {
-
+    loadFounrnisseurProduitWithId(id: number, index: number) {
+        this.fournisseurProduitService.getFournisseurProduitByProduitId(id).subscribe(data => {
             this.fournisseurProduit = data
+            this.arrayLigne.at(index)?.fournisseurs.splice(0, this.arrayLigne.at(index)?.products.length)
+            data.forEach(el => {
+                this.arrayLigne.at(index)?.fournisseurs.push(el)
+            })
         })
     }
 
-    getProductByCategory(id: number) {
+    getProductByCategory(id: number, index: number) {
         this.produitService.getAllProductByCategory(id).subscribe(data => {
             this.produits = data
+            this.arrayLigne.at(index)?.products.splice(0, this.arrayLigne.at(index)?.products.length)
+            data.forEach(el => {
+                this.arrayLigne.at(index)?.products.push(el)
+            })
         })
     }
 
@@ -128,10 +137,12 @@ export class PanierComponent implements OnInit {
             id: null,
             qte: 1,
         }));
+        this.arrayLigne.push({categories: this.categories, products: [], fournisseurs: []})
     }
 
     removeItem(index: number): void {
         this.items.removeAt(index);
+        this.arrayLigne.splice(index, 1);
     }
 
     getAllProduit() {
@@ -170,9 +181,9 @@ export class PanierComponent implements OnInit {
 
     }
 
-    changeSelectedProductIdItem(event: any) {
+    changeSelectedProductIdItem(event: any, index: number) {
         this.selectedIndexProductItem = event.target.value
-        this.loadFounrnisseurProduitWithId()
+        this.loadFounrnisseurProduitWithId(event.target.value, index)
 
     }
 
@@ -213,10 +224,10 @@ export class PanierComponent implements OnInit {
         this.dataFiltered = this.data.filter(item => item.type.toLowerCase().includes(word.toLowerCase()) || item.description.toLowerCase().includes(word.toLowerCase()) || item.reference.toLowerCase().includes(word.toLowerCase()));
     }
 
-    changeSelectedCategoryItem(event: any) {
+    changeSelectedCategoryItem(event: any, index: number) {
         console.log(event.target.value)
         this.selectedIdCategory = event.target.value
-        this.getProductByCategory(this.selectedIdCategory)
+        this.getProductByCategory(event.target.value, index)
     }
 
     getTotalSum() {

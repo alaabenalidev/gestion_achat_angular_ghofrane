@@ -23,21 +23,44 @@
                     </thead>
                     <tbody>
                     <ng-container formArrayName="items">
+                        <!--                        <ng-container *ngIf="items.length>1"></ng-container>-->
+                        <!--                        <tr *ngFor="let item of items.controls;let i=index" [formGroupName]="i">-->
+                        <!--                            <td>-->
+                        <!--                                {{ getItemFournisseur1(i)?.produit?.categorie?.name }}-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                {{ getItemFournisseur1(i)?.produit?.type }}-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                {{ getItemFournisseur1(i)?.fournisseur?.prenom + " " + getItemFournisseur1(i)?.fournisseur?.nom + " | " + getItemFournisseur1(i)?.prix }}-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <input type="number" class="form-control text-center" formControlName="qte" value="1">-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                {{ (panierForm.get('items')?.value[i].qte || 1) * (getItemFournisseur1(i)?.prix || 1) }}-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <button type="button" class="btn btn-danger me-2"-->
+                        <!--                                        (click)="removeItem(i)">a-->
+                        <!--                                </button>-->
+                        <!--                            </td>-->
+                        <!--                        </tr>-->
                         <tr *ngFor="let item of items.controls;let i=index" [formGroupName]="i">
                             <td>
-                                <select class="form-select" (change)="changeSelectedCategoryItem($event)">
+                                <select class="form-select" (change)="changeSelectedCategoryItem($event,i)">
                                     <option value="-1" selected disabled>Select a category</option>
-                                    <option *ngFor="let category of categories"
+                                    <option *ngFor="let category of arrayLigne?.at(i)?.categories"
                                             [value]="category.id_Categorie">{{ category.name }}
                                     </option>
                                 </select>
                             </td>
                             <td>
-                                <select [disabled]="selectedIdCategory<1"
+                                <select
                                         class="form-select"
-                                        (change)="changeSelectedProductIdItem($event)">
+                                        (change)="changeSelectedProductIdItem($event,i)">
                                     <option value="-1" selected disabled>Selectionner un produit</option>
-                                    <option *ngFor="let produit of produits"
+                                    <option *ngFor="let produit of arrayLigne?.at(i)?.products"
                                             [value]="produit.id_Produit">{{ produit.type }}
                                     </option>
                                 </select>
@@ -46,7 +69,7 @@
                                 <select formControlName="id" id="id-{{i}}" [disabled]="selectedIndexProductItem<1"
                                         class="form-select">
                                     <option value="-1" selected disabled>Selectionner un produit</option>
-                                    <option *ngFor="let item of fournisseurProduit"
+                                    <option *ngFor="let item of arrayLigne?.at(i)?.fournisseurs"
                                             [value]="item.id">{{ item.fournisseur.prenom + " " + item.fournisseur.nom + " | " + item.prix }}
                                     </option>
                                 </select>
@@ -55,7 +78,7 @@
                                 <input type="number" class="form-control text-center" formControlName="qte" value="1">
                             </td>
                             <td>
-                                {{ (panierForm.get('items')?.value[i].qte || 1) * (getItemFournisseur1(i)?.prix || 1) }}
+                                {{ (panierForm.get('items')?.value[i]?.qte || 1) * (getItemFournisseur1(i)?.prix || 1) }}
                             </td>
                             <td>
                                 <button type="button" class="btn btn-danger me-2"
@@ -81,8 +104,10 @@
 
 
             </form>
-            <button type="button" [disabled]="items.length<1" class="btn btn-success" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal1">Confirmer</button>
+            <button type="button" [disabled]="items !== null && items.length <1"
+                    class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal1">Confirmer
+            </button>
         </div>
 
     </div>
