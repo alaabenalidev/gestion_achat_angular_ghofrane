@@ -22,6 +22,10 @@ export class FournisseurProduitService {
     return this.http.get<FournisseurProduit[]>(`${this.apiUrl}/${id}/produit`);
   }
 
+  getFournisseurProduitByFournisseurId(id:number):Observable<FournisseurProduit[]>{
+    return this.http.get<FournisseurProduit[]>(`${this.apiUrl}/${id}/fournisseur`);
+  }
+
   getFournisseurProduitById(id:number):Observable<FournisseurProduit>{
     return this.http.get<FournisseurProduit>(`${this.apiUrl}/${id}`);
   }

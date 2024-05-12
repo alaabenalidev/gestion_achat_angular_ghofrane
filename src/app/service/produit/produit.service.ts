@@ -33,5 +33,7 @@ export class ProduitService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-
+  getAllProductByCategory(id:number){
+    return this.http.get<Produit[]>(`${this.apiUrl}/${id}/categorie`);
+  }
 }

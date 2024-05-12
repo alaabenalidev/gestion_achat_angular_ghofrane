@@ -48,7 +48,7 @@ export class CreateComponent implements OnInit {
       adresse : ['',[Validators.required]],
       ville : ['',[Validators.required]],
       num_tel : ['',[Validators.required]],
-      categorie : ['',[Validators.required]],
+      // categorie : ['',[Validators.required]],
     });
   }
 

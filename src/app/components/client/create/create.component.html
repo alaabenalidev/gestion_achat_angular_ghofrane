@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-6">
           <label for="validationDefault04" class="form-label">Ville</label>
-          <input type="text" class="form-control" formControlName="ville" id="validationDefault03" required>
+          <input type="text" class="form-control" formControlName="ville" id="validationDefault04" required>
           <div class="alert alert-danger mt-2" role="alert"
                *ngIf="(clientResgister.get('ville')?.hasError('required') ) && clientResgister.get('ville')?.touched">
             Ville is required
@@ -49,30 +49,30 @@
             Num tel is required
           </div>
         </div>
-        <div class="col-12">
-          <div class="row">
-            <div class="col-md-6 from-group">
-              <label class="form-label">Categorie: </label>
-              <select class="form-select" formControlName="categorie">
-                <option value="-1" selected disabled>Select a category</option>
-                <option *ngFor="let category of categories" [value]="category.id_Categorie">{{ category.name }}</option>
-              </select>
-            </div>
-            <form class="col-md-6" [formGroup]="categorieResgister" (submit)="saveCateg(categorieResgister.value)">
-              <div class="col-md-12">
-                <label for="validationDefault01" class="form-label">Nom du nouvelle catégorie</label>
-                <input type="text" class="form-control" formControlName="name" id="name" required>
-                <div class="alert alert-danger mt-2" role="alert"
-                     *ngIf="(categorieResgister.get('name')?.hasError('required') ) && categorieResgister.get('name')?.touched">
-                  Nom is required
-                </div>
-              </div>
-              <div class="col-12">
-                <button class="btn btn-primary" [disabled]="!categorieResgister.valid" type="submit">Save</button>
-              </div>
-            </form>
-          </div>
-        </div>
+<!--        <div class="col-12">-->
+<!--          <div class="row">-->
+<!--            <div class="col-md-6 from-group">-->
+<!--              <label class="form-label">Categorie: </label>-->
+<!--              <select class="form-select" formControlName="categorie">-->
+<!--                <option value="-1" selected disabled>Select a category</option>-->
+<!--                <option *ngFor="let category of categories" [value]="category.id_Categorie">{{ category.name }}</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            <form class="col-md-6" [formGroup]="categorieResgister" (submit)="saveCateg(categorieResgister.value)">-->
+<!--              <div class="col-md-12">-->
+<!--                <label for="validationDefault01" class="form-label">Nom du nouvelle catégorie</label>-->
+<!--                <input type="text" class="form-control" formControlName="name" id="name" required>-->
+<!--                <div class="alert alert-danger mt-2" role="alert"-->
+<!--                     *ngIf="(categorieResgister.get('name')?.hasError('required') ) && categorieResgister.get('name')?.touched">-->
+<!--                  Nom is required-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-12">-->
+<!--                <button class="btn btn-primary" [disabled]="!categorieResgister.valid" type="submit">Save</button>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="col-12">
           <button class="btn btn-primary" [disabled]="!clientResgister.valid" type="submit">Save</button>
         </div>

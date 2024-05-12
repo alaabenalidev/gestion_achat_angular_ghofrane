@@ -1,48 +1,142 @@
 <div class="container mt-5">
-  <h3>Liste des fournisseurs</h3>
+    <div class="alert alert-danger" role="alert" *ngIf="messageErreur">
+        erreur
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="messageSuccsess">
+        add client success
+    </div>
+    <h3>Liste des fournisseurs</h3>
 
-  <!-- Message d'alerte en cas de succès -->
-  <div class="alert alert-danger" role="alert" *ngIf="messageSuccess">
-    Suppression du fournisseur effectuée avec succès.
-  </div>
+    <!-- Message d'alerte en cas de succès -->
+    <div class="alert alert-danger" role="alert" *ngIf="messageSuccess">
+        Suppression du fournisseur effectuée avec succès.
+    </div>
 
-  <!-- Boutons d'actions -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <!-- Titre optionnel pour le tableau -->
-    <h5 class="m-0"></h5>
+    <!-- Boutons d'actions -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- Titre optionnel pour le tableau -->
+        <h5 class="m-0"></h5>
 
-    <!-- Bouton "Ajouter un fournisseur" -->
-    <a class="btn btn-success" routerLink="/admin/client/create">Ajouter un fournisseur</a>
-  </div>
+        <!-- Bouton "Ajouter un fournisseur" -->
+        <a class="btn btn-success" routerLink="/admin/client/create">Ajouter un fournisseur</a>
+    </div>
 
-  <!-- Tableau des fournisseurs -->
-  <table class="table table-bordered table-striped text-center">
-    <thead class="table-primary"> <!-- Utilisation de table-primary pour les en-têtes -->
-      <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Prénom</th>
-        <th scope="col">Adresse</th>
-        <th scope="col">Numéro de téléphone</th>
-        <th scope="col">Ville</th>
-        <th scope="col">catégorie</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of data">
-        <td>{{ item.nom }}</td>
-        <td>{{ item.prenom }}</td>
-        <td>{{ item.adresse }}</td>
-        <td>{{ item.num_tel }}</td>
-        <td>{{ item.ville }}</td>
-        <td>{{ item.categorie.name }}</td>
-        <td>
-          <!-- Bouton "Supprimer" -->
-          <button type="button" class="btn btn-danger me-2" (click)="removeClient(item.id)">Supprimer</button>
-          <!-- Bouton "Modifier" -->
-          <a type="button" class="btn btn-info" [routerLink]="['/admin/client/edit', item.id]">Modifier</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Tableau des fournisseurs -->
+    <table class="table table-bordered table-striped text-center">
+        <thead class="table-primary"> <!-- Utilisation de table-primary pour les en-têtes -->
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Numéro de téléphone</th>
+            <th scope="col">Email</th>
+            <th scope="col">catégorie</th>
+            <th scope="col">Produits</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of data">
+            <td>{{ item.nom }}</td>
+            <td>{{ item.prenom }}</td>
+            <td>{{ item.adresse }}</td>
+            <td>{{ item.num_tel }}</td>
+            <td>{{ item.ville }}</td>
+            <td>
+                <ng-container *ngIf="item.categorie != null">
+                    {{ item.categorie.name }}
+                </ng-container>
+                <ng-container *ngIf="item.categorie == null">
+                    <form class="d-flex" [formGroup]="clientResgister"
+                          (submit)="affectFournisseurToCategory()">
+                        <input style="display: none" formControlName="fournisseur" [defaultValue]="item.id"
+                               [value]="item.id">
+                        <select class="form-select" formControlName="categorie">
+                            <option value="-1" selected disabled>Select a category</option>
+                            <option *ngFor="let category of categories"
+                                    [value]="category.id_Categorie">{{ category.name }}
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-success me-2"
+                                (click)="clientResgister.get('fournisseur')?.patchValue(item.id)">+
+                        </button>
+                    </form>
+                </ng-container>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        (click)="getProductByCategory(item.categorie.id_Categorie);selectedFournisseur=item.id;loadFounrnisseurProduit()">
+                    Consulter/ajouter
+                </button>
+            </td>
+            <td>
+                <!-- Bouton "Supprimer" -->
+                <button type="button" class="btn btn-danger me-2" (click)="removeClient(item.id)">Supprimer</button>
+                <!-- Bouton "Modifier" -->
+                <a type="button" class="btn btn-info" [routerLink]="['/admin/client/edit', item.id]">Modifier</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Gestion des produits</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form [formGroup]="clientProduitsForm" (ngSubmit)="onSubmitClientProduits()"
+                      class="card card-body bg-light">
+                    <div class="modal-body" style="max-height: 200px">
+                        <table class="table">
+                            <thead class="table-primary"> <!-- Utilisation de table-primary pour les en-têtes -->
+                            <tr>
+                                <th scope="col">Produit</th>
+                                <th scope="col">Prix</th>
+                                <th scope="col">Quantité</th>
+                                <th scope="col">Annulé</th>
+                            </tr>
+                            </thead>
+                            <tbody formArrayName="items" class="mb-2">
+                            <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+
+                                <td>
+                                    <!--                                    <input type="number" style="display: none" formControlName="fournisseur" id="fournisseur-{{i}}" [defaultValue]="selectedFournisseur" [value]="selectedFournisseur">-->
+                                    <select class="form-select" formControlName="produit" id="produit-{{i}}">
+                                        <option value="-1" selected disabled>Select a product</option>
+                                        <option *ngFor="let product of produits"
+                                                [value]="product.id_Produit">{{ product.type }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" formControlName="prix" id="prix-{{i}}" placeholder="Price"
+                                           class="form-control" required min="0.01">
+                                </td>
+                                <td>
+                                    <input type="number" formControlName="quantite" id="quantite-{{i}}"
+                                           placeholder="Quantite" class="form-control" required min="1">
+                                </td>
+                                <td>
+                                    <button type="button" (click)="removeItem(i)" class="btn btn-danger">Remove</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" (click)="addItem()" class="btn btn-primary">Add Item</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                (click)="clientProduitsForm.reset();items.clear()">Close
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Affecter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

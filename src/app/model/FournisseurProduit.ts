@@ -6,5 +6,6 @@ export interface FournisseurProduit {
   fournisseur: Client;
   produit: Produit;
   prix: number;
+  quantite:number;
   remis: number;
 }
