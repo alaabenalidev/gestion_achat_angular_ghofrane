@@ -17,7 +17,7 @@ export class HomeComponent {
 
   EspaceAdmin(){
     localStorage.setItem("role","admin")
-    this.router.navigateByUrl("admin/client/list");
+    this.router.navigateByUrl("admin/produit/list");
   }
 
 }
